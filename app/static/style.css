@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-image: url('/static/beans-bg.png');
+    background-size: cover;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-position: center;
+    padding: 20px;
+    color: #4a2c2a;
+}
+
+.container {
+    max-width: 650px;
+    margin: auto;
+    background: rgba(255, 238, 241, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border: 3px dashed #f8b5c1;
+}
+
+h2, h3 {
+    color: #d17b88;
+    margin-bottom: 15px;
+}
+
+input, button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid #f8b5c1;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #d17b88;
+    background-color: #fff8f9;
+}
+
+button {
+    background-color: #f8b5c1;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #d17b88;
+    color: white;
+}
+
+.card {
+    background: #fff;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px solid #f8b5c1;
+    text-align: right;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card::before {
+    content: "☕";
+    font-size: 24px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    opacity: 0.3;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #f8b5c1;
+    color: white;
+    padding: 4px 10px;
+    margin: 5px 3px;
+    border-radius: 20px;
+    font-size: 13px;
+}

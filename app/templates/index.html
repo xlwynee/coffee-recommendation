@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>توصية المحاصيل</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .price-slider {
+      margin: 20px 0;
+    }
+    .range-value {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #555;
+    }
+    input[type="range"] {
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none; /* Remove default slider style for WebKit browsers */
+      -moz-appearance: none;    /* Remove default slider style for Firefox */
+      background: transparent;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #f8b5c1;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px;
+      background: #f8b5c1;
+      border-radius: 3px;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: #f8b5c1;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="color:#d17b88; margin-bottom:20px;">☕ توصية المحاصيل</h1>
+
+    <h2>ما هي إيحاءاتك المفضلة؟</h2>
+    <form method="post">
+      <input type="text" name="preferences" placeholder="مثال: فواكه، شوكولاتة، كراميل" value="{{ request.form.get('preferences','') }}">
+
+      <!-- Single slider for max price -->
+      <div class="price-slider">
+        <label>الميزانية (ريال)</label>
+        <input type="range" id="maxPrice" name="max_price" min="0" max="200" step="5" value="{{ request.form.get('max_price','120') }}">
+        <div class="range-value">
+          <span id="maxPriceValue">{{ request.form.get('max_price','120') }} ريال</span>
+        </div>
+      </div>
+
+      <button type="submit">🔍 ابحث</button>
+    </form>
+
+    {% if recommendations %}
+      <h3>🎯 النتائج:</h3>
+      {% for item in recommendations %}
+        <div class="card">
+          <strong>{{ item["اسم المنتج"] }}</strong>
+          <br>من <strong>{{ item["اسم المحمصة"] }}</strong> 📍 ({{ item["الدولة"] }})
+          <br>
+          {% set flavors = item["الإيحاءات"] or "" %}
+          {% for flavor in flavors.split("،") %}
+            {% if flavor.strip() %}
+              <span class="tag">{{ flavor.strip() }}</span>
+            {% endif %}
+          {% endfor %}
+          <br>💰 {{ item["السعر"] }} ريال
+        </div>
+      {% endfor %}
+    {% elif request.method == 'POST' %}
+      <div class="card">😕 No results found for this budget/flavors. Try increasing the budget or changing keywords.</div>
+    {% endif %}
+  </div>
+
+  <script>
+    // Update displayed max price value when slider changes
+    const maxSlider = document.getElementById('maxPrice');
+    const maxValue = document.getElementById('maxPriceValue');
+
+    maxSlider.addEventListener('input', function() {
+      maxValue.textContent = this.value + " ريال";
+    });
+  </script>
+</body>
+</html>
