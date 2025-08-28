@@ -52,6 +52,15 @@ pip install -r requirements.txt
 > The application will load the dataset, build/load embeddings, and show the interface.
 
 ---
+---
+
+## Demo
+
+Here’s a quick preview of the interface:
+
+![Coffee Recommender Demo](images/demo.png)
+
+---
 
 ## Deployment Status
 
